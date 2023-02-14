@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div >
+<h2>Question2</h2>
+    <table>
+        <tr>
+            <th>Ref</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date_debut</th>
+            <th>Date_fin</th>
+            <th>nb_participants</th>
+        </tr>
+        {% for l in tabL %}
+            <tr>
+                <td> {{ l.ref }} </td>
+                <td>{{l.Titre}}</td>
+                <td>{{l.Description}}</td>
+                <td>{{l.date_debut}}</td>
+                <td>{{l.date_fin}}</td>
+                <td>{{l.nb_participants}}</td>
+            </tr>
+        {% endfor %} 
+        </table> 
+        <h2>Question3</h2>
+        
+            {% for l in tabL %}
+               <li>{{l.Titre|upper}}</li>
+            {% endfor %}
+         
+         <h2>Question4</h2>
+         nombre de formations = {{tabL|length}}
+
+         <h2>Question5</h2>
+         les formation theorique : 
+         
+            {% for l in tabL %}
+            {% if l.Description=='formation theorique' %}
+               <li>{{l.Titre}}</li>
+            {% endif %}
+            {% endfor %}
+        
+         <h2>Question6</h2>
+          {% set maxp = 0 %}
+          {% set maxt = ""%}
+          {% for l in tabL %}
+          {% if l.nb_participants > maxp %} 
+            {% set maxp = l.nb_participants%}
+            {% set maxt = l.Titre%}
+          {% endif %}
+          {% endfor %}
+          la formation ayant le plus grand nombre de participants :   
+           <li>{{ maxt }}</li>
+           
+
+        <h2>Question7</h2>
+          {% set NTP = 0 %}
+          {% for l in tabL %}
+          {% set NTP = NTP + l.nb_participants %}
+          {% endfor %}
+          le nombre total de participants dans toutes les formations : 
+          <li>{{NTP}}</li>
+
+         <h2>Question8</h2>
+        condition dans le cas où le tableau n’est pas défini et/ou vide  : 
+
+        {% if tabL is empty %}
+        Tableau est vide
+        {% else %}
+        Tableau non vide
+        {% endif %}
+<h2>Question9</h2>
+<table>
+        <tr>
+            <th>Ref</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date_debut</th>
+            <th>Date_fin</th>
+            <th>nb_participants</th>
+        </tr>
+        {% for l in tabL %}
+        
+            <tr>
+                <td> {{ l.ref }} </td>
+                <td>{{l.Titre}}</td>
+                <td>{{l.Description}}</td>
+                <td>{{l.date_debut}}</td>
+                <td>{{l.date_fin}}</td>
+                <td>{{l.nb_participants}}
+                {% if l.nb_participants==0 %}
+                <a href="{{path('la_liste')}}"> Participer </a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %} 
+        </table>
+   
+
+
+</div>
+{% endblock %}
